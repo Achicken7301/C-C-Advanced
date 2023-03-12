@@ -232,3 +232,69 @@ Truy cập biến cục bộ từ 1 file khác.
 
 # struct & union
 
+`struct` và `union` là kiểu dữ liệu mà người dùng tự định nghĩa.
+
+## Tuy nhiên với `struct` thì nó phân từng phần tử sẽ có địa chỉ riêng.
+
+```c
+struct data {
+  char uid;
+  char uid_data;
+};
+
+int main(int argc, char const *argv[]) {
+    struct data test01;
+    
+    printf("Dia chi cua uid: %p\n", &test01.uid);             
+    printf("Dia chi cua uid_data: %p\n", &test01.uid_data);  
+    /*
+    OUTPUT:
+    Dia chi cua uid: 0x7ffd6e357898
+    Dia chi cua uid_data: 0x7ffd6e357899
+    Vì phần tử đầu tiên của struct cũng là địa chỉ của struct, vì phần tử đầu tiên là 1 byte (kiểu chữ liệu char) nên địa chỉ tiếp theo của uid_data sẽ là địa chỉ của uid + 1 byte.
+    */
+    return 0;
+}
+
+```
+## `union` sẽ là cùng 1 địa chỉ.
+
+```c
+union data {
+  char uid;
+  char uid_data;
+};
+
+int main(int argc, char const *argv[]) {
+  union data test01;
+
+  printf("Dia chi cua uid: %p\n", &test01.uid);
+  printf("Dia chi cua uid_data: %p\n", &test01.uid_data);
+  /*
+  OUPUT:
+  Dia chi cua uid: 0x7ffed8f00377
+  Dia chi cua uid_data: 0x7ffed8f00377
+  */
+  return 0;
+}
+
+```
+
+## Ứng dụng:
+
+Ta lồng `struct` vào `union` để có thể truy xuất và gửi dữ liệu nhanh hơn.
+
+```c
+typedef union {
+  struct {
+    char uid[4];
+    char data[8];
+  } frame;
+
+  char data_frame[12];
+} frame_nfc;
+```
+
+Bằng cách này khi ta muốn gán dữ liệu cho `frame_nfc` một cách dễ dàng.
+
+Nhưng khi gửi dữ liệu ta chỉ cần gửi 1 frame của nó đi là xong. Vì `struct frame` và `data_frame` có cùng 1 địa chỉ và cùng số bytes (12 bytes).
