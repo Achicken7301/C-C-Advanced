@@ -229,3 +229,6 @@ int main() {
 ## extern
 
 Truy cập biến cục bộ từ 1 file khác.
+
+# struct & union
+

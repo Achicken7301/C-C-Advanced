@@ -1,3 +1,3 @@
-gcc ./multiples_parameters.c -o a.exe
+gcc ./tramsit.c -o a.exe
 
 ./a.exe
