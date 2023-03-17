@@ -46,7 +46,7 @@ void chon_duong_hang_khong(phuong_tien_giao_thong *phuong_tien)
     switch (user_input)
     {
     case 1:
-        phuong_tien->loai_phuong_tien = MAY_BAY_THUONG_MAI;
+        phuong_tien->duong_hang_khong.may_bay_thuong_mai = MAY_BAY_THUONG_MAI;
         break;
     case 2:
         phuong_tien->loai_phuong_tien = MAY_BAY_TRUC_THANG;
@@ -101,7 +101,7 @@ void chon_duong_bo(phuong_tien_giao_thong *phuong_tien)
 }
 void chon_phuong_tien_init(phuong_tien_giao_thong *phuong_tien)
 {
-    int user_input;
+    int user_input = 0;
     printf("1: duong hang khong\n");
     printf("2: duong thuy\n");
     printf("3: duong bo\n");
