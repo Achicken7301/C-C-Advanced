@@ -2,7 +2,7 @@
 ## COMPILER
 Dịch từ ngôn ngữ do lập trình viên viết (C/C++, PHP, HTML, ) sang ngôn ngữ máy.
 
-Từ file `main.c/cpp, main.h`,... nó **perprocess** sang file `main.i` từ đây các file MACRO hay include sẽ được thêm vào `main.i`.
+Từ file `main.c/cpp, main.h`,... nó **preprocess** sang file `main.i` từ đây các MACRO hay include sẽ được thêm vào `main.i`.
 
 Sau đó `main.i` sẽ được compiler dịch sang file `main.s` dưới dạng assembly.
 
@@ -90,8 +90,8 @@ VD: `knight.h` và `knight.cpp`
 ## Tránh define trùng
 
 ```cpp
-#ifndef __knight_H // Cái tên này chỉ đặt tránh trùng với các thư viện khác.
-#define __knight_H
+#ifndef __KNIGHT_H // Cái tên này chỉ đặt tránh trùng với các thư viện khác.
+#define __KNIGHT_H
 
 #endif
 ```
@@ -121,9 +121,9 @@ Tính cổng mà có nhiểu kiểu dữ liệu vừa `int` vừa `double`
 
 ## static 
 
-### static vs mormal and auto
+### `static` vs `normal` and `auto`
 
-Biến static tồn tại cho đến khi hết vòng đời của chương trình. Nó sẽ không bị mất khi kết thúc lời gọi hàm.
+Biến `static` tồn tại cho đến khi **hết vòng đời** của chương trình. Nó sẽ không bị mất khi kết thúc lời gọi hàm.
 
 VD:
 ```c
@@ -181,7 +181,7 @@ int main() {
 }
 ```
 
-### Static được gọi trong hàm **chỉ có nghĩa trong hàm** đó.
+### `static` được gọi trong hàm **chỉ có nghĩa trong hàm** đó.
 ```c
 #include <stdio.h>
 
@@ -230,7 +230,7 @@ int main() {
 
 Truy cập biến cục bộ từ 1 file khác.
 
-# struct & union
+# `struct` & `union`
 
 `struct` và `union` là kiểu dữ liệu mà người dùng tự định nghĩa.
 
@@ -298,3 +298,147 @@ typedef union {
 Bằng cách này khi ta muốn gán dữ liệu cho `frame_nfc` một cách dễ dàng.
 
 Nhưng khi gửi dữ liệu ta chỉ cần gửi 1 frame của nó đi là xong. Vì `struct frame` và `data_frame` có cùng 1 địa chỉ và cùng số bytes (12 bytes).
+
+# `setjump.h`
+
+Xét ví dụ:
+```c
+#include <setjmp.h>
+
+jmp_buf buf;
+
+int main() {
+    int i;
+    i = setjump(buf);
+
+    printf("i: %d\n", i);
+
+    if (i!=0){
+        printf("i khac khong i: %d\n", i);
+        exit(0);
+    }
+
+    longjump(buf, i); // set i = 1
+
+    return 0;
+
+}
+```
+
+```c
+OUPUT: 
+i: 0
+i: 1
+i khac khong i: 1
+```
+
+Giải thích:
+
+Thì đầu tiên code chạy tới `setjump(buf)` sau đó nó nhảy xuống `longjump(buf, 1)` và set giá trị của `i = 1` (kì diệu vcl).
+
+Sau đó nó mới thực thi chương trình ở dưới dòng `i = setjump(buf);`
+
+## `setjump` vs `goto`
+
+`goto` chỉ áp dụng trong **hàm**, trong khi `setjump` có thể sử dụng **toàn cục**.
+
+## Ứng dụng `setjump`
+
+Áp dụng nhấn external interupt (nút nhấn) không cần xử lý qua timer (một cách khác).
+
+
+# bitmask
+
+## Clear bit
+`0101.0101`
+
+Xóa bit số 5.
+
+Để xóa bit số 5 ta làm như sau:
+
+        0101.0101
+    and 1110.1111
+        0100.0101 -> bit số 5 đã xóa.
+
+Vậy `1110.1111` là `~(1 << n)` với n là số bit cần xóa.
+
+## Set bit 
+`0101.0101`
+
+set bit số 4 = 1:
+
+        0101.0101
+    or  0000.1000
+        0101.1101 -> set được bit số 4 = 1
+
+set bit ta làm như sau: `|= (1 << n)` với n là số bit cần set.
+
+
+## Toggle bit
+
+# Con trỏ Pointer
+
+## Khởi tạo con trỏ
+
+`<kiểu dữ liệu> * <tên con trỏ>;`
+
+```c
+int *ptr_int; // Khao báo con trỏ int
+double *ptr_double;
+char *ptr_char;
+
+(int*) * prt_prt_int; // Kiểu dữ liệu int*
+(int**) * ptr_prt_prt_int; // Kiểu dữ liệu int**
+
+```
+
+## Con trỏ hàm
+
+Mỗi hàm khi khai báo đều có 1 địa chỉ
+### Khai báo con trỏ
+
+Ví dụ: ta có nhiều hàm có cùng kiểu input vào output.
+
+`void (<Địa chỉ hàm>)(parameters);`
+
+```c
+
+void tong(int a, int b);
+void hieu(int a, int b);
+void tich(int a, int b);
+double thuong(int a, int b);
+
+int main(){
+    //Khai báo con trỏ hàm cùng kiểu dữ liệu với các hàm mà ta sẽ trỏ vào.
+    void (*ptr_ham)(int, int);
+    double (*ptr_double_ham)(int, int);
+
+    ptr_ham = &tong; // Gan dia chi cua ptr_ham = dia chi cua tong.
+    ptr_double_ham = &thuong;
+
+    ptr_double_ham(5, 6);
+    ptr_ham(12, 5);
+}
+
+```
+
+Ví dụ khác: Parameter là địa chỉ của một hàm khác (scheduler, interupt)
+
+```c
+void calc(int a, int b, void (*fnc_prt)(int, int));
+//--------^------^------^--------------------------
+//        para1  para2  Địa chỉ của hàm.
+```
+
+Ví dụ khác.
+
+```c
+typedef struct{
+    int a; 
+    int b; 
+    void (*fnc_prt)(int, int);
+}calc;
+
+calc tinh_tong = (5, 6, &tong);
+```
+
