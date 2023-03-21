@@ -442,3 +442,53 @@ typedef struct{
 calc tinh_tong = (5, 6, &tong);
 ```
 
+# Con trỏ `void`
+
+Ta có 3 kiểu dữ liệu 
+```c
+int a  = 4;
+double b = 4.1;
+char c = 'A';
+
+int sum(int a, int b);
+```
+
+Con trỏ void có thể trỏ tới **bất cứ** kiểu dữ liêu nào
+
+```c
+
+
+```
+
+## Mảng con trỏ
+```c
+// mảng bình thường 
+int arr[] = {1,2,3,4,5,6,7};
+char arr_char[] = {'a', 'b', 'c', 'd', 'e'};
+double arr_double[] = {3.14, 3.14, 3.14, 3.14, 3.14};
+
+void sum(int a, int b);
+void minus(int a, int b);
+
+void (* funcArr[])(int a, int b) = {&tong, &hieu};
+// Khai báo mảng địa chỉ arr
+
+void *arr[5] = {arr, arr_char, arr_double};
+
+BTVN sử dụng các biến, hàm ở trên thông qua mảng địa chỉ.
+
+
+```
+
+# Con trỏ NULL
+## KICH THƯỚC CON TRỎ PHỤ THUỘC VÀO VI XỬ LÝ.
+
+VXL 32 bit / 8 = 4 bytes.\
+VXL 64 bit / 8 = 8 bytes.
+
+## Khi khai báo con trỏ, NÊN cho nó một giá trị NULL trước.
+
+`void *ptr = NULL;`
+
+Và sau khi sử dụng ptr xong thì ta gán lại bằng giá trị NULL
+
