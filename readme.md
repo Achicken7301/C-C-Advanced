@@ -492,3 +492,14 @@ VXL 64 bit / 8 = 8 bytes.
 
 Và sau khi sử dụng ptr xong thì ta gán lại bằng giá trị NULL
 
+# Linked list
+
+Cấu trúc của linked-list nó khác với array là linked-list là mảng động. 
+
+```c
+typedef struct {
+    int data,
+    int index,
+    node *next
+} node;
+```
