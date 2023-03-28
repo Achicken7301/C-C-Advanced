@@ -2,6 +2,8 @@
     "files.associations": {
         "*.embeddedhtml": "html",
         "functional": "c",
-        "string": "c"
+        "string": "c",
+        "linkedlistv2.h": "c",
+        "main.h": "c"
     }
 }

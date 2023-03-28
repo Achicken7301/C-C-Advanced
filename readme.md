@@ -119,7 +119,7 @@ Tính cổng mà có nhiểu kiểu dữ liệu vừa `int` vừa `double`
 
 # Variables types (volatile, register, static, auto)
 
-## static 
+## `static` 
 
 ### `static` vs `normal` and `auto`
 
@@ -226,7 +226,35 @@ int main() {
 }
 ```
 
-## extern
+## `volatile`
+
+Vấn đề là khi đọc chân ở một số vdk thì quá trình compiler nó sẽ tự tối ưu hóa một biến mà đọc đi đọc lại nhiều lần. (1 chân của vdk).
+
+Và vì khí nó tối ưu hóa như vậy nên khi đọc giá trị từ 1 chân nó chỉ xuất 1 giá trị (không đúng đối với trường hợp vdk).
+
+Nên khi đó từ khóa volatile sẽ bắt buộc compiler ghi đè và nói rằng "đừng có tối ưu hóa biến này, hãy đọc chân của vdk đó 1 lần nữa".
+
+Cách khai báo:
+```c
+volatile int PIN01;
+```
+## `register`
+
+Cấu trúc của 1 con vdk như sau, hãy quan tâm tới 3 vị trí CPU, RAM và Register.
+
+![register](docs/register.png)
+
+Khi tạo một biến bình thường.
+```c
+int a = 0;              // Lưu vào RAM.
+register int b = 0;     // Lưu vào Register
+
+```
+
+Nhìn vào sơ đồ ta thấy vị trí của `register` gần hơn RAM đối với CPU. Nên khi truy suất dữ liệu. Dữ liệu được lưu vào `register` sẽ được lấy nhanh hơn RAM.
+
+
+## `extern`
 
 Truy cập biến cục bộ từ 1 file khác.
 
@@ -349,7 +377,7 @@ Sau đó nó mới thực thi chương trình ở dưới dòng `i = setjump(buf
 
 # bitmask
 
-## Clear bit
+## Clear bit 0 -> 1
 `0101.0101`
 
 Xóa bit số 5.
@@ -362,7 +390,7 @@ Xóa bit số 5.
 
 Vậy `1110.1111` là `~(1 << n)` với n là số bit cần xóa.
 
-## Set bit 
+## Set bit 1 -> 0
 `0101.0101`
 
 set bit số 4 = 1:
@@ -374,7 +402,7 @@ set bit số 4 = 1:
 set bit ta làm như sau: `|= (1 << n)` với n là số bit cần set.
 
 
-## Toggle bit
+## Toggle bit (if 0 ? 1 : 0)
 
 # Con trỏ Pointer
 
@@ -456,7 +484,12 @@ int sum(int a, int b);
 Con trỏ void có thể trỏ tới **bất cứ** kiểu dữ liêu nào
 
 ```c
+void (* void_pointer);
 
+void_pointer = &a;
+void_pointer = &b;
+void_pointer = &c;
+void_pointer(int, int) = &sum;
 
 ```
 
@@ -499,7 +532,92 @@ Cấu trúc của linked-list nó khác với array là linked-list là mảng �
 ```c
 typedef struct {
     int data,
-    int index,
     node *next
 } node;
+```
+
+# Viết theo tiêu chuẩn.
+## Comment doxygen
+Trước mỗi function đều phải có comment theo kiểu doxygen:
+```c
+
+/**
+ * @brief initation a new Vector (Tóm tắt hàm này làm gì?)
+ * 
+ * @param vector (Thông số truyền vào là gì?)
+ */
+void vectorInit(Vector *vector)
+{
+    vector->value = 0;
+    vector->next = NULL;
+    vector->pushBack = &pushBack;
+}
+```
+## Đặt tên hàm
+<động từ> trước.
+```c
+void pushBack(Vector *vector);
+void popBack(Vector *vector);
+```
+
+## Cấu trúc file thư mục dự án của c
+```
+projectName
+    - Header (chứa file .h) 
+        linkedList.h
+        main.h
+    - Source (chứa file .c)
+        linkedlist.c
+        main.c
+```
+
+# Viết như thư viện.
+
+Tạo một kiểu dữ liệu vector.
+```c
+typedef struct {
+    void (*push_back)(node *, int);
+    void (*erase)(node *, int);
+    node *node;
+}vector;
+```
+Tạo một hàm Init như một contructor.
+```c
+void vectorInit(node **node){
+    
+}
+
+
+```
+# Makefile
+
+
+# Json
+## Cấu trúc file .json
+```json
+{
+    "Object01": {
+        "KEY01": "value",
+        "KEY02": "value",
+        "KEY03": "value",
+        "Object01_01": {
+            "KEY": "value",
+            "KEY": "value",
+        }
+    },
+    
+    "Object02": {
+        "KEY": "value",
+        "KEY": "value",
+        "KEY": "value",
+        "Object02_01": {
+            "KEY": "value",
+            "KEY": "value",
+        },
+        "Object02_02": {
+            "KEY": "value",
+            "KEY": "value",
+        }
+    },
+}
 ```

@@ -1,11 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "linkedList.h"
 
-typedef struct Node
-{
-	int value;
-	struct Node *next;
-} Node;
 
 Node *createNote(int value)
 {
@@ -81,14 +75,13 @@ void clear(Node **head)
 }
 
 // return size of the linked list
-int size(Node **head)
+int size(Node *head)
 {
 	int size = 0;
-	Node *lastNode = *head;
 	// from head to lastNode
-	while (lastNode->next != NULL)
+	while (head->next != NULL)
 	{
-		lastNode = lastNode->next;
+		head = head->next;
 		size++;
 	}
 
@@ -99,13 +92,13 @@ int size(Node **head)
 void erase(Node **head, int pos)
 {
 	// check if that pos exists
-	if (size(head) < pos)
+	if (size((*head)) < pos)
 	{
 		printf("pos is out of range\n");
 		return;
 	}
 
-	// find preNode, afterNode and currNode
+	// find preNode and currNode
 	Node *preNode, *currNode;
 	currNode = *head;
 
@@ -126,8 +119,7 @@ void erase(Node **head, int pos)
 void assign(Node **head, int index, int value)
 {
 	// check if that pos exists
-	printf("size of linked list: %d\n", size(head));
-	if (size(head) < index)
+	if (size((*head)) < index)
 	{
 		printf("pos is out of range\n");
 		return;
@@ -144,25 +136,4 @@ void assign(Node **head, int index, int value)
 	}
 
 	currNode->value = value;
-}
-
-int main(int argc, char const *argv[])
-{
-	// Create a NULL pointer
-	Node *node1 = NULL;
-	pushBack(&node1, 7);
-	pushBack(&node1, 2);
-	pushBack(&node1, 4);
-	pushBack(&node1, 5);
-	assign(&node1, 3, 123);
-	pushBack(&node1, 1);
-	pushBack(&node1, 9);
-	erase(&node1, 2);
-	// clear(&node1);
-	// Get Node
-	for (int i = 0; i < size(&node1); i++)
-	{
-		printf("%d\n", getNode(&node1, i));
-	}
-	return 0;
 }
