@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <string.h>
+#include "convertString2Bin.h"
 
-int main()
+void str2bin(char *str, int len)
 {
-    char str[] = "Hello";
-    int len = strlen(str);
-
     for (int i = 0; i < len; i++)
     {
         printf("%c: ", str[i]);
@@ -17,6 +13,4 @@ int main()
 
         printf("\n");
     }
-
-    return 0;
 }

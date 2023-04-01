@@ -1,26 +1,12 @@
-#include <stdio.h>
+#include "main.h"
 
-int tong(int a, int b)
-{
-    // printf("Tong!\n");
-    return a + b;
-}
-int hieu(int a, int b)
-{
-    // printf("Hieu!\n");
-    return a - b;
-}
-
-int main(int argc, char const *argv[])
+int main()
 {
     int arr[] = {1, 3, 5, 7};
     char arr_char[] = {'a', 'b', 'c', 'd', 'e'};
-    double arr_double[] = {3.141, 3.142, 3.143, 3.144, 3.145};
-
-    void (*funcArr[])(int a, int b) = {&tong, &hieu};
-    // Khai báo mảng địa chỉ arr
-
-    void *arr_ptr[5] = {arr, arr_char, arr_double, funcArr};
+    double arr_double[] = {3.141, 4.142, 5.143, 6.144, 7.145};
+    void (*tongHieu[])(int a, int b) = {&tong, &hieu};
+    void *arr_ptr[5] = {arr, arr_char, arr_double, tongHieu};
 
     printf("Lay kieu du lieu cua int\n");
     for (int i = 0; i < 4; i++)
@@ -39,6 +25,10 @@ int main(int argc, char const *argv[])
     {
         printf("%f\n", *((double *)arr_ptr[2] + i));
     }
+
+    // access function tong through *arr_ptr
+    ((void (*)(int, int))(((void **)(arr_ptr[3]))[0]))(3, 2);
+    ((void (*)(int, int))(((void **)(arr_ptr[3]))[1]))(5, 2);
 
     return 0;
 }

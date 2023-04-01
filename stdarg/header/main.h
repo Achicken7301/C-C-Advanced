@@ -2,7 +2,9 @@
 #define __MAIN_H__
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdarg.h>
 
-#include "linkedList.h"
+
+#include "multiples_parameters.h"
+
 #endif

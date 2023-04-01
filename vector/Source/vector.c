@@ -1,6 +1,12 @@
-#include "linkedList.h"
+#include "vector.h"
 
-Node *createNote(int value)
+/**
+ * @brief Create a Note object
+ * 
+ * @param value 
+ * @return Node* 
+ */
+static Node *createNote(int value)
 {
 	Node *temp;
 	temp = (Node *)malloc(sizeof(Node));
@@ -11,11 +17,11 @@ Node *createNote(int value)
 
 /**
  * @brief push a new value to the last element of the linked
- * 
+ *
  * @param head linked list head
- * @param value 
+ * @param value
  */
-void pushBack(Node **head, int value)
+static void pushBack(Node **head, int value)
 {
 	Node *newNode, *lastNode;
 	newNode = createNote(value);
@@ -36,24 +42,24 @@ void pushBack(Node **head, int value)
 }
 
 /**
- * @brief Get the Node object
- * 
- * @param head 
- * @param node_number 
- * @return int 
+ * @brief Get the Node's value at the given index
+ *
+ * @param head
+ * @param index
+ * @return int
  */
-int getNode(Node **head, int node_number)
+static void getNode(Node **head, int index)
 {
 	Node *ptr = *head;
-	for (int i = 0; i < node_number; i++)
+	for (int i = 0; i < index; i++)
 	{
 		ptr = ptr->next;
 		if (ptr == NULL)
 		{
-			return -1;
+			exit(1);
 		}
 	}
-	return ptr->value;
+	printf("%d\n", ptr->value);
 }
 
 void addAtHead(Node **head, int value)
@@ -72,8 +78,12 @@ void addAtHead(Node **head, int value)
 	}
 }
 
-// Hàm được sử dụng để loại bỏ tất cả các phần tử của vùng chứa vector.
-void clear(Node **head)
+/**
+ * @brief Clear all nodes
+ * 
+ * @param head 
+ */
+static void clear(Node **head)
 {
 	Node *temp;
 	while ((*head) != NULL)
@@ -85,8 +95,13 @@ void clear(Node **head)
 	*head = NULL;
 }
 
-// return size of the linked list
-int size(Node *head)
+/**
+ * @brief Set node's size
+ * 
+ * @param head 
+ * @return int 
+ */
+static int size(Node *head)
 {
 	int size = 0;
 	// from head to lastNode
@@ -99,8 +114,13 @@ int size(Node *head)
 	return size + 1;
 }
 
-// erase node at index in linked list
-void erase(Node **head, int pos)
+/**
+ * @brief erase a node at given position
+ * 
+ * @param head 
+ * @param pos 
+ */
+static void erase(Node **head, int pos)
 {
 	// check if that pos exists
 	if (size((*head)) < pos)
@@ -126,8 +146,14 @@ void erase(Node **head, int pos)
 	free(currNode);
 }
 
-// assign a Node with a given value
-void assign(Node **head, int index, int value)
+/**
+ * @brief Assign a node'index to new value
+ * 
+ * @param head 
+ * @param index 
+ * @param value 
+ */
+static void assign(Node **head, int index, int value)
 {
 	// check if that pos exists
 	if (size((*head)) < index)
@@ -147,4 +173,15 @@ void assign(Node **head, int index, int value)
 	}
 
 	currNode->value = value;
+}
+
+void vectorInit(Vector *vector)
+{
+	vector->node = createNote(0);
+	vector->pushBack = &pushBack;
+	vector->getNode = &getNode;
+	vector->size = &size;
+	vector->clear = &clear;
+	vector->erase = &erase;
+	vector->assign = &assign;
 }

@@ -380,6 +380,15 @@ Sau đó nó mới thực thi chương trình ở dưới dòng `i = setjump(buf
 ## Clear bit 0 -> 1
 `0101.0101`
 
+and operator (&) truth table:
+
+| x   | y   | x AND y (x \| y) |
+| --- | --- | :--------------: |
+| 0   | 0   |        0         |
+| 0   | 1   |        0         |
+| 1   | 0   |        0         |
+| 1   | 1   |        1         |
+
 Xóa bit số 5.
 
 Để xóa bit số 5 ta làm như sau:
@@ -393,6 +402,15 @@ Vậy `1110.1111` là `~(1 << n)` với n là số bit cần xóa.
 ## Set bit 1 -> 0
 `0101.0101`
 
+or operator (|) truth table:
+
+| x   | y   | x OR y (x \| y) |
+| --- | --- | :-------------: |
+| 0   | 0   |        0        |
+| 0   | 1   |        1        |
+| 1   | 0   |        1        |
+| 1   | 1   |        1        |
+
 set bit số 4 = 1:
 
         0101.0101
@@ -404,6 +422,34 @@ set bit ta làm như sau: `|= (1 << n)` với n là số bit cần set.
 
 ## Toggle bit (if 0 ? 1 : 0)
 
+
+XOR operator (^) truth table:
+
+| x   | y   | x XOR y (x \^ y) |
+| --- | --- | :--------------: |
+| 0   | 0   |        0         |
+| 0   | 1   |        1         |
+| 1   | 0   |        1         |
+| 1   | 1   |        0         |
+
+
+`0101.0101`
+
+Bật tắt bit thứ 4:
+```c
+    0101.0101
+XOR 0001.0000
+    0100.0101
+-------^---------- 1 XOR 1 = 0
+```
+
+```c
+    0100.0101
+XOR 0001.0000
+    0101.0101
+-------^---------- 0 XOR 1 = 1
+```
+Để bật tắt bit thứ k của n thì: `n ^= 1 << k;`
 # Con trỏ Pointer
 
 ## Khởi tạo con trỏ

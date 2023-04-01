@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdarg.h>
+#include "multiples_parameters.h"
 
 void sum(int count, ...)
 {
@@ -30,9 +29,4 @@ void sum(int count, ...)
     va_end(ptr_int);
     va_end(ptr_double);
     printf("Sum = %f", result);
-}
-int main()
-{
-    sum(5, 5.0, 10, 5, 2, 8.5);
-    return 0;
 }

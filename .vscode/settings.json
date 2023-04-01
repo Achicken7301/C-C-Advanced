@@ -4,6 +4,11 @@
         "functional": "c",
         "string": "c",
         "linkedlistv2.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "stdlib.h": "c",
+        "vectortest.h": "c",
+        "stdarg.h": "c",
+        "vector.h": "c",
+        "linkedlist.h": "c"
     }
 }

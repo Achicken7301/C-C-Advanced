@@ -1,40 +1,4 @@
-#include <stdio.h>
-
-typedef enum
-{
-    MAY_BAY_THUONG_MAI,
-    MAY_BAY_TRUC_THANG,
-    XE_KHACH,
-    XE_MAY,
-    TAU_THUY,
-    CANO
-} phuong_tien;
-
-typedef union
-{
-    phuong_tien may_bay_thuong_mai;
-    phuong_tien may_bay_truc_thang;
-} hang_khong;
-
-typedef union
-{
-    phuong_tien xe_khach;
-    phuong_tien xe_may;
-} bo;
-
-typedef union
-{
-    phuong_tien tau_thuy;
-    phuong_tien cano;
-} thuy;
-
-typedef union
-{
-    hang_khong duong_hang_khong;
-    bo duong_bo;
-    thuy duong_thuy;
-    phuong_tien loai_phuong_tien;
-} phuong_tien_giao_thong;
+#include "transportPrice.h"
 
 void chon_duong_hang_khong(phuong_tien_giao_thong *phuong_tien)
 {
@@ -71,7 +35,6 @@ void chon_duong_thuy(phuong_tien_giao_thong *phuong_tien)
         break;
     case 2:
         phuong_tien->loai_phuong_tien = CANO;
-        printf("Gia tien 80.000Vnd\n");
         break;
 
     default:
@@ -132,32 +95,22 @@ void hien_thi_gia_tien(phuong_tien_giao_thong *phuong_tien)
         printf("May bay thuong mai 100.000vnd\n");
         break;
     case MAY_BAY_TRUC_THANG:
-        printf("May bay thuong mai 80.000vnd\n");
+        printf("May bay truc thang 80.000vnd\n");
         break;
     case XE_KHACH:
-        printf("May bay thuong mai 60.000vnd\n");
+        printf("Xe khach 60.000vnd\n");
         break;
     case XE_MAY:
-        printf("May bay thuong mai 10.000vnd\n");
+        printf("xe may 10.000vnd\n");
         break;
     case TAU_THUY:
-        printf("May bay thuong mai 40.000vnd\n");
+        printf("tau thuy 40.000vnd\n");
         break;
     case CANO:
-        printf("May bay thuong mai 20.000vnd\n");
+        printf("cano 20.000vnd\n");
         break;
 
     default:
         break;
     }
-}
-
-int main(int argc, char const *argv[])
-{
-    phuong_tien_giao_thong phuong_tien;
-
-    chon_phuong_tien_init(&phuong_tien);
-    hien_thi_gia_tien(&phuong_tien);
-
-    return 0;
 }

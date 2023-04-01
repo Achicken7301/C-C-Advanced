@@ -1,8 +1,7 @@
 #ifndef __LINKED_LIST_H__
 #define __LINKED_LIST_H__
 
-// #include "main.h"s
-
+#include "main.h"
 
 typedef struct Node
 {
@@ -16,5 +15,6 @@ void pushBack(Node **head, int value);
 
 int getNode(Node **head, int node_number);
 
+int size(Node *head);
 
 #endif

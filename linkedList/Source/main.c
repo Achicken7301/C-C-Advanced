@@ -2,9 +2,17 @@
 
 int main(int argc, char const *argv[])
 {
-    Vector v1;
-    v1.pushBack(&v1, 1);
-    v1.pushBack(&v1, 2);
-    v1.pushBack(&v1, 3);
+    Node *n1 = NULL;
+    pushBack(&n1, 1);
+    pushBack(&n1, 2);
+    pushBack(&n1, 4);
+    pushBack(&n1, 6);
+    pushBack(&n1, 123);
+
+    for (int i = 0; i < size(n1); i++)
+    {
+        printf("%d\n", getNode(&n1, i));
+    }
+
     return 0;
 }
