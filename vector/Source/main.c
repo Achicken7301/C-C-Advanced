@@ -12,7 +12,7 @@ int main()
     array.pushBack(&array.node, 331);
     array.pushBack(&array.node, 3111);
     array.assign(&array.node, 4, 10);
-    // printf("size: %d\n", array.size(array.node));
+    array.clear(&array.node);
 
     for (int i = 1; i < array.size(array.node); i++)
     {

@@ -15,7 +15,6 @@ typedef enum
     GIAY = 1 << 7      // 0b1000.0000
 } DO_DUNG_CA_NHAN;
 
-
 void addProduct(uint8_t *gio_hang, DO_DUNG_CA_NHAN ten_do_dung);
 void removeProduct(uint8_t *gio_hang, DO_DUNG_CA_NHAN ten_do_dung);
 void showCartProduct(uint8_t gio_hang);

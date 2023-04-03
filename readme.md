@@ -667,3 +667,35 @@ void vectorInit(node **node){
     },
 }
 ```
+# Stack, Stack pointer, Program Counter (PC)
+
+## Sơ lược Program Counter (PC)
+
+1 thanh ghi là 4bytes (32bit).
+
+PC là bộ đếm, nghĩa là nó sẽ đếm và tăng từng địa chỉ.
+
+Mỗi địa chỉ là 32bit.
+
+## Stack structure FILO
+### i++ vs ++i
+Giá trị trước đó và giá trị sử dụng:
+
+`i++` là nó lấy giá trị cũ, và sau đó nó tăng lên 1 cho vòng lặp sau:
+```c
+int i = 0;
+printf("%d\n", i++); // outputs 0
+printf("%d\n", i);   // outputs 1
+```
+
+Đối với `++i` thì nếu giá trị trước đó là 3 nó sẽ tăng lên thành 4 **để chạy code**. Sau đó nó giữ nguyên giá trị `i = 4`
+
+```c
+int i = 0;
+printf("%d\n", ++i); // outputs 1
+printf("%d\n", i);   // outputs 1
+```
+## Câu hỏi:
+
+1. Tại sao khi chạy, vdk vào hàm main chạy trước?
+
