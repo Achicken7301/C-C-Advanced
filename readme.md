@@ -699,3 +699,7 @@ printf("%d\n", i);   // outputs 1
 
 1. Tại sao khi chạy, vdk vào hàm main chạy trước?
 
+# Queue Structure FIFO
+
+
+
