@@ -700,6 +700,17 @@ printf("%d\n", i);   // outputs 1
 1. Tại sao khi chạy, vdk vào hàm main chạy trước?
 
 # Queue Structure FIFO
+`Enqueue()` – Adds (or stores) an element to the end of the queue..
 
+`Dequeue()` – Removal of elements from the queue.
+
+`Peek()` or `front()`- Acquires the data element available at the front node of the queue without deleting it.
+
+`rear()` – This operation returns the element at the rear end without removing it.
+
+`isFull()` – Validates if the queue is full.
+
+`isNull()` – Checks if the queue is empty.
+![](docs/fifo.png)
 
 

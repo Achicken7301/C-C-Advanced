@@ -1,14 +1,5 @@
 #include "queue.h"
 
-/*
-Enqueue() – Adds (or stores) an element to the end of the queue..
-Dequeue() – Removal of elements from the queue.
-Peek() or front()- Acquires the data element available at the front node of the queue without deleting it.
-rear() – This operation returns the element at the rear end without removing it.
-isFull() – Validates if the queue is full.
-isNull() – Checks if the queue is empty.
-*/
-
 Node *createNode(int value)
 {
     Node *temp = (Node *)malloc(sizeof(Node));
@@ -19,9 +10,9 @@ Node *createNode(int value)
 
 /**
  * @brief Check if the queue is empty
- * 
- * @param q 
- * @return int 
+ *
+ * @param q
+ * @return int
  */
 static int isEmpty(Queue *q)
 {
@@ -30,15 +21,16 @@ static int isEmpty(Queue *q)
 
 /**
  * @brief Remove the rear element from the queue and return the value
- * 
- * @param queue 
- * @return int 
+ *
+ * @param queue
+ * @return int
  */
 static int deQueue(Queue *queue)
 {
     if (isEmpty(queue))
     {
         printf("Queue is empty\n");
+        return -1;
     }
     else
     {
@@ -48,6 +40,8 @@ static int deQueue(Queue *queue)
         queue->front = queue->front->next;
         free(temp);
 
+        // for safety
+        temp = NULL;
         return value;
     }
 }
@@ -83,12 +77,12 @@ static void enQueue(Queue *queue, int value)
         // check if 1st element
         if (queue->front == NULL)
         {
-            // increment the rear pointer to point to the next empty space.
             queue->front = queue->rear;
 
-            // Add the data element to the queue location, where the rear is pointing.
             queue->front->value = queue->rear->value;
             queue->size++;
+
+            // optimize find the front.next == NULL
             queue->lastNode = queue->front;
             return;
         }
@@ -103,7 +97,7 @@ static void enQueue(Queue *queue, int value)
         //     queue->lastNode = queue->lastNode->next;
         // }
 
-        // update front.next
+        // update front.next. This front.next is always NULL.
         queue->lastNode->next = queue->rear;
 
         // store lastNode = front's last node
@@ -113,11 +107,21 @@ static void enQueue(Queue *queue, int value)
     }
 }
 
+int front(Queue *queue)
+{
+    return queue->front->value;
+}
+
+int rear(Queue *queue)
+{
+    return queue->lastNode->value;
+}
+
 /**
  * @brief Initializes the queue with capacity
- * 
- * @param queue 
- * @param capacity 
+ *
+ * @param queue
+ * @param capacity
  */
 void queueInit(Queue *queue, int capacity)
 {
@@ -127,4 +131,6 @@ void queueInit(Queue *queue, int capacity)
     queue->rear = NULL;
     queue->deQueue = &deQueue;
     queue->enQueue = &enQueue;
+    queue->frontQueue = &front;
+    queue->rearQueue = &rear;
 }

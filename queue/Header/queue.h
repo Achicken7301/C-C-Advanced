@@ -23,6 +23,8 @@ typedef struct Queue
 
     int (*deQueue)(struct Queue *);
     void (*enQueue)(struct Queue *, int);
+    int (*frontQueue)(struct Queue *);
+    int (*rearQueue)(struct Queue *);
 } Queue;
 
 void queueInit(Queue *queue, int capacity);
