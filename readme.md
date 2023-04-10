@@ -713,4 +713,37 @@ printf("%d\n", i);   // outputs 1
 `isNull()` – Checks if the queue is empty.
 ![](docs/fifo.png)
 
+# c++
+
+## OOP
+### Class
+Class hoạt động như một bản blueprint. Nó không có giác trị hay địa chỉ gì cả, cho đến khi ta khai báo.
+### Public & Pirvate in class
+
+### Constructor
+
+Hàm chạy đầu tiên khi khởi tạo một object 
+
+```cpp
+class MyClass{
+    public:
+        ClassConstructor(int pro01, int pro02);
+        void showClass();
+
+    private:
+        int property01;
+        int property02;
+}
+
+Myclass::ClassConstructor(int pro01, int pro02){
+    property01 = pro01;
+    property02 = pro02;
+}
+
+```
+### Static in class
+
+
+### Hpp & Cpp, Cấu trúc class ở file header và source.
+
 
