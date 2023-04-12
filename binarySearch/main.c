@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct
+typedef struct Node
 {
     int data;
     struct Node *next;
@@ -15,11 +15,17 @@ Node *createNode(int value)
     return temp;
 }
 
+typedef struct CenterPoint
+{
+    Node *mid;
+    struct CenterPoint *left, *right;
+} CenterPoint;
+
 /**
- * @brief
+ * @brief Add new elements to  the linked list in order.
  *
- * @param head
- * @param value
+ * @param head of the linked list
+ * @param value which we are adding
  */
 void addSortedNode(Node **head, int value)
 {
@@ -82,30 +88,64 @@ int getNode(Node *head, int node_number)
     return ptr->data;
 }
 
-// return size of the linked list
-int linkedListSize(Node *head)
-{
-    int size = 0;
-    // from head to lastNode
-    while (head->next != NULL)
-    {
-        head = head->next;
-        size++;
-    }
-
-    return size + 1;
-}
-
-int size(Node *head, Node *lastNode)
+int size(Node *head)
 {
     int count = 0;
-    while (head->next != lastNode)
+    Node *temp = head;
+    while (temp->next != NULL)
     {
+        temp = temp->next;
         count++;
     }
     return count;
 }
 
+CenterPoint *createCenterPoint()
+{
+    CenterPoint *temp = (CenterPoint *)malloc(sizeof(CenterPoint));
+    temp->left = NULL;
+    temp->right = NULL;
+
+    return temp;
+}
+
+/**
+ * @brief Return All center points of the given linked list
+ * 
+ * @param head of the linked list
+ * @param size of the linked list
+ * @return CenterPoint* tree structure
+ */
+CenterPoint *findCenterPoint(Node **head, int size)
+{
+    if (size > 0)
+    {
+        CenterPoint *temp = createCenterPoint();
+        temp->mid = *head;
+
+        for (size_t i = (size / 2); i > 0; i--)
+        {
+            temp->mid = temp->mid->next;
+        }
+
+        // Center point left
+        temp->left = findCenterPoint(head, (size / 2));
+        // Center point right
+        temp->right = findCenterPoint(&(temp->mid->next), (size - 1) / 2);
+
+        return temp;
+    }
+    return NULL;
+}
+
+/**
+ * @brief Binary search in the sorted linked list
+ *
+ * @param head of the linked list
+ * @param value which we looking for
+ * @param size of the linked list
+ * @return value founded ? value : -1;
+ */
 int binarySearch(Node *head, int value, int size)
 {
     if (size > 0)
@@ -114,7 +154,7 @@ int binarySearch(Node *head, int value, int size)
         Node *mid = head;
         int count = size / 2;
 
-        while (count > 0)
+        while (count >= 0)
         {
             mid = mid->next;
             count--;
@@ -131,7 +171,7 @@ int binarySearch(Node *head, int value, int size)
         }
         else
         {
-            return binarySearch(mid->next, value, size / 2);
+            return binarySearch(mid->next, value, (size - 1) / 2);
         }
     }
 
@@ -150,13 +190,19 @@ int main()
     addSortedNode(&n, 1);
     addSortedNode(&n, 5);
     addSortedNode(&n, 3);
+    addSortedNode(&n, 1111);
+    addSortedNode(&n, 154);
+    addSortedNode(&n, 14);
 
-    for (size_t i = 0; i < linkedListSize(n); i++)
+    for (size_t i = 0; i <= size(n); i++)
     {
         printf("%d\n", getNode(n, i));
     }
+    CenterPoint *cPoints;
+    cPoints = findCenterPoint(&n, size(n));
 
-    printf("binarySearch: %d\n", binarySearch(n, 121, linkedListSize(n)));
+    printf("binarySearch: %d\n", binarySearch(n, 25, size(n)));
+    printf("binarySearch: %d\n", binarySearch(n, 11, size(n)));
 
     return 0;
 }

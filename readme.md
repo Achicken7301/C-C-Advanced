@@ -714,6 +714,8 @@ printf("%d\n", i);   // outputs 1
 ![](docs/fifo.png)
 
 # c++
+## Function template
+https://www.learncpp.com/cpp-tutorial/function-templates/
 
 ## OOP
 ### Class
@@ -747,3 +749,10 @@ Myclass::ClassConstructor(int pro01, int pro02){
 ### Hpp & Cpp, Cấu trúc class ở file header và source.
 
 
+### Tính kế thừa (inheritance)
+### Kế thừa public 
+
+
+### Kế thừa private 
+
+### Tính ghi đè.
